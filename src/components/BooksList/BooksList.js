@@ -6,7 +6,7 @@ const BooksList = ({ books, deleteBook, deletingInProgress }) => {
 
   books.forEach(book => {
     booksItems.push(
-      <BooksItem bookInfo={book.data()} key={book.id} deleteBook={deleteBook} deletingInProgress={deletingInProgress}/>
+      <BooksItem bookInfo={book.data()} key={book.id} bookId={book.id} deleteBook={deleteBook} deletingInProgress={deletingInProgress}/>
     )
   })
 

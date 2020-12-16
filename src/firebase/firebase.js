@@ -26,20 +26,20 @@ export const authAPI = {
 
 export const libraryAPI = {
   getBook(ISBN) {
-    return db.collection("books").doc(ISBN).get().then(response =>
+    return db.collection("books").where("ISBN", "==", ISBN).get().then(response =>
       response
     )
   },
-  setBook(title, authors, date, ISBN) {
-    return db.collection("books").doc(ISBN).set({ title, authors, date, ISBN }).then(() =>
+  setBook(title, authors, date, ISBN, id) {
+    return db.collection("books").doc(id).set({ title, authors, date, ISBN }).then(() =>
       true
     )
   },
   subscribeBooks() {
     return db.collection("books")
   },
-  deleteBook(ISBN) {
-    return db.collection("books").doc(ISBN).delete().then(() =>
+  deleteBook(id) {
+    return db.collection("books").doc(id).delete().then(() =>
       true
     )
   }

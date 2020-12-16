@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { addNewBook, getBookInfo, setBook } from '../../redux/library-reducer';
-import { getActiveBook, getIsFetching, getSuccessSend, getIsSendingBook } from '../../redux/selectors';
+import { addNewBook, getBookInfo, updateBookInfo } from '../../redux/library-reducer';
+import { getActiveBook, getIsFetching, getSuccessSend, getIsSendingBook, getActiveBookId } from '../../redux/selectors';
 
 class BookPageAPIComponent extends React.Component {
   getActualBookData() {
@@ -14,7 +14,6 @@ class BookPageAPIComponent extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.ISBN)
     this.getActualBookData()
   }
 
@@ -28,8 +27,9 @@ class BookPageAPIComponent extends React.Component {
     return (
       <BookPage
         addNewBook={this.props.addNewBook}
-        updateBookInfo={this.props.setBook}
+        updateBookInfo={this.props.updateBookInfo}
         bookInfo={this.props.bookInfo}
+        bookId={this.props.bookId}
         isFetching={this.props.isFetching}
         isSending={this.props.isSending}
         successSend={this.props.successSend}
@@ -41,6 +41,7 @@ class BookPageAPIComponent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     bookInfo: getActiveBook(state),
+    bookId: getActiveBookId(state),
     isFetching: getIsFetching(state),
     isSending: getIsSendingBook(state),
     successSend: getSuccessSend(state),
@@ -50,7 +51,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getBookInfo,
   addNewBook,
-  setBook
+  updateBookInfo
 }
 
 export default compose(

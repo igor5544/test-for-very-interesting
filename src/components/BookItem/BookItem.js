@@ -2,7 +2,7 @@ import React from 'react';
 import s from './booksItem.module.css';
 import { NavLink } from "react-router-dom";
 
-const BooksItem = ({ bookInfo, deleteBook, deletingInProgress }) => {
+const BooksItem = ({ bookInfo, deleteBook, deletingInProgress, bookId }) => {
   return (
     <article className={s.wrapper}>
       <h2 className={s.title}>
@@ -40,8 +40,8 @@ const BooksItem = ({ bookInfo, deleteBook, deletingInProgress }) => {
         </NavLink>
         <button
           className={`btn btn-danger ${s.control}`}
-          disabled={deletingInProgress.some(ISBN => ISBN === bookInfo.ISBN)}
-          onClick={() => deleteBook(bookInfo.ISBN)}
+          disabled={deletingInProgress.some(id => id === bookId)}
+          onClick={() => deleteBook(bookId)}
         >
           Delete
         </button>

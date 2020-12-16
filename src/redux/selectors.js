@@ -26,6 +26,10 @@ export const getActiveBook = (state) => {
   return state.library.activeBook
 }
 
+export const getActiveBookId = (state) => {
+  return state.library.activeBookId
+}
+
 export const getIsSendingBook = (state) => {
   return state.library.isSending
 }

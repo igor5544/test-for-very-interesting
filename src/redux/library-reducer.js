@@ -3,6 +3,7 @@ import { stopSubmit } from 'redux-form';
 
 const SET_BOOKS = 'SET_BOOKS';
 const SET_ACTIVE_BOOK = 'ET_ACTIVE_BOOK';
+const SET_ACTIVE_BOOK_ID = 'SET_ACTIVE_BOOK_ID';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 const TOGGLE_IS_DELETING_PROGRESS = 'TOGGLE_IS_DELETING_PROGRESS';
 const TOGGLE_IS_SENDING = 'TOGGLE_IS_SENDING';
@@ -13,6 +14,7 @@ const initialState = {
   isFetching: true,
   deletingInProgress: [],
   activeBook: {},
+  activeBookId: null,
   isSending: false,
   successSend: false
 };
@@ -28,6 +30,11 @@ const libraryReducer = (state = initialState, action) => {
       return ({
         ...state,
         activeBook: action.bookInfo,
+      })
+    case SET_ACTIVE_BOOK_ID:
+      return ({
+        ...state,
+        activeBookId: action.id,
       })
     case TOGGLE_IS_FETCHING:
       return ({
@@ -48,8 +55,8 @@ const libraryReducer = (state = initialState, action) => {
       return ({
         ...state,
         deletingInProgress: action.isFetching ?
-          [...state.deletingInProgress, action.ISBN] :
-          [...state.deletingInProgress.filter(ISBN => ISBN !== action.ISBN)]
+          [...state.deletingInProgress, action.id] :
+          [...state.deletingInProgress.filter(id => id !== action.id)]
       })
     default:
       return state;
@@ -63,10 +70,17 @@ export const setBooks = (books) => {
   }
 }
 
-export const setActiveBooks = (bookInfo) => {
+export const setActiveBook = (bookInfo) => {
   return {
     type: SET_ACTIVE_BOOK,
     bookInfo
+  }
+}
+
+export const setActiveBookId = (id) => {
+  return {
+    type: SET_ACTIVE_BOOK_ID,
+    id
   }
 }
 
@@ -91,11 +105,11 @@ export const toggleSuccessSend = (successSend) => {
   }
 }
 
-export const toggleIsDeletingProgress = (isFetching, ISBN) => {
+export const toggleIsDeletingProgress = (isFetching, id) => {
   return {
     type: TOGGLE_IS_DELETING_PROGRESS,
     isFetching,
-    ISBN
+    id
   }
 }
 
@@ -108,18 +122,32 @@ export const toggleSubscribeBooks = () => async dispatch => {
 
 }
 
-export const setBook = (title, authors, date, ISBN, targetISMN = ISBN) => async dispatch => {
-  dispatch(toggleIsSending(true));
-
-  const response = await libraryAPI.setBook(title, authors, date, ISBN, targetISMN).catch(error => {
-    dispatch(toggleIsSending(false));
-    return dispatch(stopSubmit('book', { _error: error }));
-  });
+export const setBook = (title, authors, date, ISBN, id) => async dispatch => {
+  const response = await libraryAPI.setBook(title, authors, date, ISBN, id)
 
   if (response) {
     dispatch(toggleSuccessSend(true));
     dispatch(toggleSuccessSend(false));
   };
+}
+
+export const updateBookInfo = (title, authors, date, ISBN, id) => async dispatch => {
+  dispatch(toggleIsSending(true));
+  const response = await libraryAPI.getBook(ISBN);
+
+  response.forEach(book => {
+    if (ISBN === book.data().ISBN && id !== book.id) {
+      dispatch(stopSubmit('book', { _error: 'this ISBN is already taken' }));
+    } else {
+      dispatch(setBook(title, authors, date, ISBN, id));
+      dispatch(setActiveBook(null));
+    }
+  })
+
+  if (response.size === 0) {
+    dispatch(setBook(title, authors, date, ISBN, id));
+    dispatch(setActiveBook(null));
+  }
 
   dispatch(toggleIsSending(false));
 }
@@ -128,33 +156,35 @@ export const addNewBook = (title, authors, date, ISBN) => async dispatch => {
   dispatch(toggleIsSending(true));
   const response = await libraryAPI.getBook(ISBN);
 
-  if (response.exists) {
+  if (response.size > 0) {
     dispatch(stopSubmit('book', { _error: 'this ISBN is already taken' }));
-  }
-
-  if (!response.exists) {
+  } else {
     dispatch(setBook(title, authors, date, ISBN));
   }
+
   dispatch(toggleIsSending(false));
 }
 
-export const deleteBook = (ISBN) => async dispatch => {
-  dispatch(toggleIsDeletingProgress(true, ISBN));
+export const deleteBook = (id) => async dispatch => {
+  dispatch(toggleIsDeletingProgress(true, id));
 
-  await libraryAPI.deleteBook(ISBN);
+  await libraryAPI.deleteBook(id);
 
-  dispatch(toggleIsDeletingProgress(false, ISBN));
+  dispatch(toggleIsDeletingProgress(false, id));
 }
 
 export const getBookInfo = (ISBN) => async dispatch => {
   dispatch(toggleIsFetching(true));
 
   if (!ISBN) {
-    dispatch(setActiveBooks(null));
+    dispatch(setActiveBook(null));
   } else {
     const response = await libraryAPI.getBook(ISBN);
 
-    dispatch(setActiveBooks(response.data()));
+    response.forEach(book => {
+      dispatch(setActiveBookId(book.id));
+      dispatch(setActiveBook(book.data()));
+    })
   }
 
   setTimeout(() => {
