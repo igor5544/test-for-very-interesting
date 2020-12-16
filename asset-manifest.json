@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/test-for-very-interesting/static/css/main.370689ce.chunk.css",
-    "main.js": "/test-for-very-interesting/static/js/main.4589c11f.chunk.js",
-    "main.js.map": "/test-for-very-interesting/static/js/main.4589c11f.chunk.js.map",
+    "main.js": "/test-for-very-interesting/static/js/main.92e41645.chunk.js",
+    "main.js.map": "/test-for-very-interesting/static/js/main.92e41645.chunk.js.map",
     "runtime-main.js": "/test-for-very-interesting/static/js/runtime-main.2e2797a1.js",
     "runtime-main.js.map": "/test-for-very-interesting/static/js/runtime-main.2e2797a1.js.map",
-    "static/js/2.49a440d1.chunk.js": "/test-for-very-interesting/static/js/2.49a440d1.chunk.js",
-    "static/js/2.49a440d1.chunk.js.map": "/test-for-very-interesting/static/js/2.49a440d1.chunk.js.map",
+    "static/js/2.913e7568.chunk.js": "/test-for-very-interesting/static/js/2.913e7568.chunk.js",
+    "static/js/2.913e7568.chunk.js.map": "/test-for-very-interesting/static/js/2.913e7568.chunk.js.map",
     "static/js/3.bb6f2df2.chunk.js": "/test-for-very-interesting/static/js/3.bb6f2df2.chunk.js",
     "static/js/3.bb6f2df2.chunk.js.map": "/test-for-very-interesting/static/js/3.bb6f2df2.chunk.js.map",
     "index.html": "/test-for-very-interesting/index.html",
     "static/css/main.370689ce.chunk.css.map": "/test-for-very-interesting/static/css/main.370689ce.chunk.css.map",
-    "static/js/2.49a440d1.chunk.js.LICENSE.txt": "/test-for-very-interesting/static/js/2.49a440d1.chunk.js.LICENSE.txt"
+    "static/js/2.913e7568.chunk.js.LICENSE.txt": "/test-for-very-interesting/static/js/2.913e7568.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.2e2797a1.js",
-    "static/js/2.49a440d1.chunk.js",
+    "static/js/2.913e7568.chunk.js",
     "static/css/main.370689ce.chunk.css",
-    "static/js/main.4589c11f.chunk.js"
+    "static/js/main.92e41645.chunk.js"
   ]
 }
