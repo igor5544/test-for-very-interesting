@@ -1,0 +1,32 @@
+.header {
+  min-height: 62px;
+  padding: 20px 0;
+  color: #ffffff;
+  background-color: #337ab7;
+}
+
+.wrapper {
+ display: flex;
+ justify-content: flex-end;
+ align-items: center;
+}
+
+.email {
+  margin: 0;
+  margin-right: 20px;
+}
+
+.btn {
+  transition: all 0.3s;
+  border: none;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn:active {
+  opacity: 0.6;
+}

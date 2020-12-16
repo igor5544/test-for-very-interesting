@@ -1,0 +1,16 @@
+.toggle-btn {
+  transition: all 0.3s;
+  display: block;
+  margin: 0 auto;
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.toggle-btn:hover {
+  opacity: 0.8;
+}
+
+.toggle-btn:active {
+  opacity: 0.6;
+}

@@ -1,0 +1,25 @@
+.add-btn {
+  display: block;
+  transition: all 0.3s;
+  max-width: 300px;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: transparent;
+  color: #337ab7;
+  border: 2px solid #337ab7;
+}
+
+.add-btn:hover {
+  background-color: #337ab7;
+  color: #ffffff;
+}
+
+.add-btn:active {
+  opacity: 0.6;
+}
+
+.alert {
+  margin-top: 20px;
+  text-align: center;
+}
